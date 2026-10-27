@@ -1,0 +1,35 @@
+#---------------------------------------------------#
+# 基础配置模板 (出厂集成云端 Rule Providers)
+#---------------------------------------------------#
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+ipv6: true
+
+# 远程规则集 (Rule Providers - 云端静默热重载)
+rule-providers:
+  my_cloud_direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_direct.yaml"
+    path: ./rule_provider/my_cloud_direct.yaml
+    interval: 3600
+
+  my_cloud_ai:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_ai.yaml"
+    path: ./rule_provider/my_cloud_ai.yaml
+    interval: 3600
+
+  my_cloud_media:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_media.yaml"
+    path: ./rule_provider/my_cloud_media.yaml
+    interval: 3600
