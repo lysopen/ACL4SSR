@@ -1,0 +1,50 @@
+# 链式测试模板：普通节点仍由转换器生成，链式落地另引用同一份 Sub-Store 订阅。
+# request.url 必须是一条 HTTP(S) Sub-Store 节点订阅，输出格式为 ClashMeta。
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+ipv6: true
+
+proxy-providers:
+  taxi-via-hk-a03:
+    type: http
+    url: "{{ request.url }}"
+    path: ./proxy_provider/taxi-via-hk-a03.yaml
+    interval: 3600
+    header:
+      User-Agent:
+        - clash.meta
+    filter: "^VPS-Taxi-LA-9929-5y1mzbjqqb$"
+    override:
+      dialer-proxy: 链式前置·香港A03
+      additional-prefix: "⛓ "
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      timeout: 8000
+
+rule-providers:
+  my_cloud_direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_direct.yaml"
+    path: ./rule_provider/my_cloud_direct.yaml
+    interval: 3600
+  my_cloud_ai:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_ai.yaml"
+    path: ./rule_provider/my_cloud_ai.yaml
+    interval: 3600
+  my_cloud_media:
+    type: http
+    behavior: classical
+    format: yaml
+    url: "https://gist.githubusercontent.com/lysopen/349f8648b50d17d8503d4a9fdbd086fa/raw/my_media.yaml"
+    path: ./rule_provider/my_cloud_media.yaml
+    interval: 3600
